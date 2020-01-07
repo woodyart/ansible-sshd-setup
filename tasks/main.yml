@@ -21,6 +21,7 @@
   register: sshd_config
 
 - name: Restart ssh service
-  service: sshd
-  state: restarted
+  service:
+    name: sshd
+    state: restarted
   when: sshd_config == 0
