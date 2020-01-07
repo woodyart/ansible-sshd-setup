@@ -1,0 +1,26 @@
+---
+- name: Configure ssh server
+  lineinfile:
+    path: '/etc/ssh/sshd_config'
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+    create: yes
+    backup: yes
+  loop:
+    - { regexp: '^Port ', line: 'Port {{ ssh_port }}' }
+    - { regexp: '^PermitRootLogin ', line: 'PermitRootLogin no' }
+    - { regexp: '^PasswordAuthentication ', line: 'PasswordAuthentication no' }
+    - { regexp: '^ChallengeResponseAuthentication ', line: 'ChallengeResponseAuthentication no' }
+    - { regexp: '^UsePAM ', line: 'UsePAM no' }
+    - { regexp: '^X11Forwarding ', line: 'X11Forwarding no' }
+    - { regexp: '^ClientAliveInterval ', line: 'ClientAliveInterval {{ alive_interval }}' }
+    - { regexp: '^ClientAliveCountMax ', line: 'ClientAliveCountMax {{ alive_max_count }}' }
+
+- name: Test ssh config
+  command: /usr/sbin/sshd -t
+  register: sshd_config
+
+- name: Restart ssh service
+  service: sshd
+  state: restarted
+  when: sshd_config == 0

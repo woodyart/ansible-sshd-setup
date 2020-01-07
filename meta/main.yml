@@ -1,0 +1,17 @@
+galaxy_info:
+  author: Andrey Dolbilin
+  description: This role setup SSH with secure options and changing port number
+  company:
+  # issue_tracker_url: http://example.com/issue/tracker
+  license: GPLv3
+  min_ansible_version: 1.2
+  # min_ansible_container_version:
+  #github_branch:
+  platforms:
+    - name: Ubuntu
+      versions:
+        - 18.04
+
+  galaxy_tags: ssh
+
+dependencies: []
