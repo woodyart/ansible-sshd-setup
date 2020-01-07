@@ -24,4 +24,4 @@
   service:
     name: sshd
     state: restarted
-  when: sshd_config == 0
+  when: sshd_config.rc == 0
